@@ -29,7 +29,7 @@ export -f env_script
 mkdir -p ${PREFIX}/bin
 mkdir -p ${PREFIX}/libexec/${PKG_NAME}
 
-jq 'del(.tool)' < global.json > global.json.new
+jq 'del(.tools)' < global.json > global.json.new
 rm -rf global.json
 mv global.json.new global.json
 tools=(dotnet-counters dotnet-dsrouter dotnet-dump dotnet-gcdump dotnet-sos dotnet-stack dotnet-trace)
