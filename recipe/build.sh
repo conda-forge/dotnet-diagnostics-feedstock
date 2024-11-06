@@ -5,7 +5,8 @@ set -o xtrace -o nounset -o pipefail -o errexit
 # Build each tool with dotnet publish
 build() {
     bin_name=$1
-    dotnet publish --no-self-contained src/Tools/${bin_name}/${bin_name}.csproj --output ${PREFIX}/libexec/${PKG_NAME}
+    framework_version="$(dotnet --version | sed -e 's/\..*//g').0"
+    dotnet publish --no-self-contained src/Tools/${bin_name}/${bin_name}.csproj --output ${PREFIX}/libexec/${PKG_NAME} --framework "net${framework_version}"
     rm ${PREFIX}/libexec/${PKG_NAME}/${bin_name}
 }
 
@@ -29,7 +30,7 @@ export -f env_script
 mkdir -p ${PREFIX}/bin
 mkdir -p ${PREFIX}/libexec/${PKG_NAME}
 
-jq 'del(.tool)' < global.json > global.json.new
+jq 'del(.tools)' < global.json > global.json.new
 rm -rf global.json
 mv global.json.new global.json
 tools=(dotnet-counters dotnet-dsrouter dotnet-dump dotnet-gcdump dotnet-sos dotnet-stack dotnet-trace)
