@@ -1,5 +1,5 @@
 {% set name = "dotnet-diagnostics" %}
-{% set version = "7.0.410101" %}
+{% set version = "8.0.547301" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/dotnet/diagnostics/archive/v{{ version }}.tar.gz
-  sha256: bba2b1147614c61318bfb105481b28dae72491f0406932de714f2074871f40f6
+  sha256: 951357dc74c6ee839ac783d63b0de49e0f4bc926971796108467d155544fdb5b
 
 build:
   noarch: generic
