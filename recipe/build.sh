@@ -18,7 +18,7 @@ tee ${PREFIX}/bin/${bin_name} << EOF
 #!/bin/sh
 exec \${DOTNET_ROOT}/dotnet exec \${CONDA_PREFIX}/libexec/dotnet-diagnostics/${bin_name}.dll "\$@"
 EOF
-chomd +x ${PREFIX}/bin/${bin_name}
+chmod +x ${PREFIX}/bin/${bin_name}
 
 tee ${PREFIX}/bin/${bin_name}.cmd << EOF
 call %DOTNET_ROOT%\dotnet exec %CONDA_PREFIX%\libexec\dotnet-diagnostics\\${bin_name}.dll %*
