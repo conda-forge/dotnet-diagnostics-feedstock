@@ -18,6 +18,7 @@ tee ${PREFIX}/bin/${bin_name} << EOF
 #!/bin/sh
 exec \${DOTNET_ROOT}/dotnet exec \${CONDA_PREFIX}/libexec/dotnet-diagnostics/${bin_name}.dll "\$@"
 EOF
+chmod +x ${PREFIX}/bin/${bin_name}
 
 tee ${PREFIX}/bin/${bin_name}.cmd << EOF
 call %DOTNET_ROOT%\dotnet exec %CONDA_PREFIX%\libexec\dotnet-diagnostics\\${bin_name}.dll %*
@@ -28,6 +29,7 @@ export -f env_script
 
 mkdir -p ${PREFIX}/bin
 mkdir -p ${PREFIX}/libexec/${PKG_NAME}
+ln -sf ${DOTNET_ROOT}/dotnet ${PREFIX}/bin
 
 jq 'del(.tool)' < global.json > global.json.new
 rm -rf global.json
