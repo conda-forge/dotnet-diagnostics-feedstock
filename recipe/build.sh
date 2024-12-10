@@ -42,3 +42,4 @@ printf "%s\n" "${tools[@]}" | xargs -I % bash -c "env_script %"
 printf "%s\n" "${tools[@]}" | xargs -I % bash -c "dotnet-project-licenses --input src/Tools/%/%.csproj -t -d license-files"
 
 rm -rf ${PREFIX}/libexec/${PKG_NAME}/shims
+rm ${PREFIX}/bin/dotnet
