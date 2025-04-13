@@ -1,5 +1,5 @@
 context:
-  version: 7.0.410101
+  version: "9.0.621003"
 
 package:
   name: dotnet-diagnostics
@@ -7,15 +7,16 @@ package:
 
 source:
   url: https://github.com/dotnet/diagnostics/archive/v${{ version }}.tar.gz
-  sha256: bba2b1147614c61318bfb105481b28dae72491f0406932de714f2074871f40f6
+  sha256: 7d6d0c3ce0ed43833b291a38d04e475c379cb5b44335211b51b5c9e3d0c18ddf
 
 build:
-  number: 1
+  number: 0
   noarch: generic
 
 requirements:
   build:
     - jq
+    - sed
   host:
     - dotnet
     - nuget-license
