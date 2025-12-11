@@ -5,7 +5,7 @@ set -o xtrace -o nounset -o pipefail -o errexit
 # Build each tool with dotnet publish
 build() {
     bin_name=$1
-    dotnet publish --no-self-contained src/Tools/${bin_name}/${bin_name}.csproj --output ${PREFIX}/libexec/${PKG_NAME}
+    dotnet publish --no-self-contained src/Tools/${bin_name}/${bin_name}.csproj --output ${PREFIX}/libexec/${PKG_NAME} -p:TreatWarningsAsErrors=false
     rm ${PREFIX}/libexec/${PKG_NAME}/${bin_name}
 }
 
@@ -31,15 +31,11 @@ mkdir -p ${PREFIX}/bin
 mkdir -p ${PREFIX}/libexec/${PKG_NAME}
 ln -sf ${DOTNET_ROOT}/dotnet ${PREFIX}/bin
 
-# This file contains methods that are polyfilled for .NET <8.0, but the check is hard-coded to .NET 8.0
-sed -i 's/NET8_0/NET9_0/g' src/Microsoft.Diagnostics.NETCore.Client/DiagnosticsIpc/IpcSocket.cs
-
 # Set .NET version to 9.0
 framework_version="$(dotnet --version | sed -e 's/\..*//g').0"
 sed -i "s?<NetCoreAppMinVersion>.*</NetCoreAppMinVersion>?<NetCoreAppMinVersion>${framework_version}</NetCoreAppMinVersion>?" Directory.Build.props
 
-# Temporarily pin Arcade.Sdk to latest version that support .NET 9.0 - newer versions needs .NET 10.0 beta
-jq 'del(.tool)' | jq '."msbuild-sdks"."Microsoft.DotNet.Arcade.Sdk" = "10.0.0-beta.24564.1"' < global.json > global.json.new
+jq 'del(.tool)' < global.json > global.json.new
 rm -rf global.json
 mv global.json.new global.json
 
