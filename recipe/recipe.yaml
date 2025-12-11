@@ -11,14 +11,18 @@ source:
 
 build:
   number: 0
-  noarch: generic
 
 requirements:
   build:
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
+    - cmake
     - jq
     - sed
+    - ninja
   host:
     - dotnet
+    - lldb =18
     - nuget-license
   run:
     - dotnet

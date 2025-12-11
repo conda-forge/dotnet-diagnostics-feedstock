@@ -31,6 +31,10 @@ mkdir -p ${PREFIX}/bin
 mkdir -p ${PREFIX}/libexec/${PKG_NAME}
 ln -sf ${DOTNET_ROOT}/dotnet ${PREFIX}/bin
 
+sed -i '/sos\-packaging.props/d' src/Tools/dotnet-sos/dotnet-sos.csproj
+sed -i '/sos\-packaging.props/d' src/SOS/SOS.Package/SOS.Package.csproj
+sed -i '/sos\-packaging.props/d' src/Tools/dotnet-dump/dotnet-dump.csproj
+
 # Set .NET version to 9.0
 framework_version="$(dotnet --version | sed -e 's/\..*//g').0"
 sed -i "s?<NetCoreAppMinVersion>.*</NetCoreAppMinVersion>?<NetCoreAppMinVersion>${framework_version}</NetCoreAppMinVersion>?" Directory.Build.props
