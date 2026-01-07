@@ -35,13 +35,13 @@ sed -i '/sos\-packaging.props/d' src/Tools/dotnet-sos/dotnet-sos.csproj
 sed -i '/sos\-packaging.props/d' src/SOS/SOS.Package/SOS.Package.csproj
 sed -i '/sos\-packaging.props/d' src/Tools/dotnet-dump/dotnet-dump.csproj
 
+jq 'del(.tools)' < global.json | jq 'del(.sdk)' > global.json.new
+rm -rf global.json
+mv global.json.new global.json
+
 # Set .NET version to 9.0
 framework_version="$(dotnet --version | sed -e 's/\..*//g').0"
 sed -i "s?<NetCoreAppMinVersion>.*</NetCoreAppMinVersion>?<NetCoreAppMinVersion>${framework_version}</NetCoreAppMinVersion>?" Directory.Build.props
-
-jq 'del(.tool)' < global.json > global.json.new
-rm -rf global.json
-mv global.json.new global.json
 
 tools=(dotnet-counters dotnet-dsrouter dotnet-dump dotnet-gcdump dotnet-sos dotnet-stack dotnet-trace)
 
